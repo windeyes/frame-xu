@@ -1,0 +1,107 @@
+@headerheight: 60px;
+.el-header,
+.el-footer {
+  background-color: #b3c0d1;
+  height: @headerheight;
+}
+
+/deep/.el-aside {
+  background-color: #fff;
+  height: 100vh;
+  width: 200px;
+  transition: all 0.3s ease;
+  h1 {
+    line-height: 60px;
+    text-align: center;
+    font-size: 0;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    div,img{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: @headerheight;
+      background: pink;
+    }
+   
+
+  }
+}
+.el-header{
+  .headerLeft{
+    i{
+      line-height: 60px;
+      padding-right: 20px;
+    }
+      h2{
+        font-size: 20px;
+      }
+      .littleTitle{
+        padding-left: 20px;
+        font-size: 14px;
+      }
+    
+    
+  }
+  .headPic{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid white;
+    position: relative;
+    overflow: hidden;
+    margin-right: 14px;
+    img{
+      height: 100%;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  }
+  .username{
+    margin-right: 20px;
+    position: relative;
+    &::after{
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translate(0,-50%);
+      right: -20px;
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 10px solid yellow;
+      border-left:  6px solid transparent;
+      border-right:  6px solid transparent;
+
+    }
+  }
+}
+.el-main {
+  background-color: #e9eef3;
+  height: calc(100vh - @headerheight);
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+.netTitle-enter-active,.netTitle-leave-active{
+  transition: all 1s ease;
+}
+.netTitle-enter,.netTitle-leave-to{
+  opacity: 0;
+}
+// 菜单栏缩进
+/deep/.el-submenu__title{
+  padding-left: 10px !important;
+}
+// 菜单栏缩小居中
+/deep/.el-menu--collapse .el-submenu__title{
+  padding-left: 10px !important;
+}
+
+
+
+

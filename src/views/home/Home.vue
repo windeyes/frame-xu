@@ -1,0 +1,121 @@
+<template>
+  <el-container>
+    <!-- 侧边 -->
+    <el-aside ref="elAside"
+              width='asideWidth'>
+      <h1>
+        宠物
+        <transition name="netTitle">
+          <img v-if="bigMenu"
+               src="../../assets/menu/leftLog.png"
+               alt="">
+          <div v-else></div>
+        </transition>
+      </h1>
+      <!-- 菜单开始 -->
+      <el-menu default-active="1"
+               class="el-menu-vertical-demo"
+               :collapse="!bigMenu"
+               router
+               unique-opened>
+        <el-submenu v-for="menu in menuList"
+                    :key="menu.index"
+                    :index="menu.index">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>{{menu.name}}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item v-for="menuItem in menu.item"
+                          :key="menuItem.index"
+                          :index="'/home/'+menuItem.index">{{menuItem.value}}</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+      </el-menu>
+      <!-- 菜单结束 -->
+    </el-aside>
+    <el-container>
+      <el-header>
+        <el-row type="flex"
+                justify="space-between">
+          <!-- 左侧开始 -->
+          <el-row type="flex"
+                  align="middle"
+                  class="headerLeft">
+            <transition>
+              <i v-if="bigMenu"
+                 class="el-icon-d-arrow-left"
+                 @click="arrowClick"></i>
+              <i v-else
+                 class="el-icon-d-arrow-right"
+                 @click="arrowClick"></i>
+            </transition>
+            <div class="headerLeftText">
+              <h2>专业的宠物网站</h2>
+              <span class="littleTitle">一流的技术服务</span>
+            </div>
+          </el-row>
+          <!-- 左侧结束 -->
+          <!-- 右侧用户 -->
+          <el-row type="flex"
+                  align="middle">
+            <div class="headPic">
+              <img src="../../assets/menu/leftLog.png"
+                   alt="">
+            </div>
+            <div class="username">用户的名字</div>
+          </el-row>
+          <!-- 右侧结束 -->
+        </el-row>
+        <div style="height:40px;width:100px;background:red;">asldjls</div>
+      </el-header>
+      <el-container>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+  </el-container>
+</template>
+
+<script>
+export default {
+  mounted () {
+    this.$refs.elAside.$el.style.width = ''
+  },
+  data () {
+    return {
+      menuList: [
+        {
+          name: '犬类',
+          index: 'dog',
+          item: [
+            {
+              index: 'dog1',
+              value: '西洋犬'
+            },
+            {
+              index: 'dog2',
+              value: '哮天犬'
+            }, {
+              index: 'dog3',
+              value: '狂犬'
+            }
+          ]
+        }
+      ],
+      showLeft: true,
+      bigMenu: true// 大菜单
+    }
+  },
+  methods: {
+    arrowClick () {
+      const aside = this.$refs.elAside.$el
+      this.bigMenu = !this.bigMenu
+      aside.offsetWidth === 50 ? aside.style.width = '200px' : aside.style.width = '50px'
+    }
+  }
+}
+</script>
+
+<style lang=less scoped src="./home.less"></style>
