@@ -67,8 +67,18 @@
           </el-row>
           <!-- 右侧结束 -->
         </el-row>
-        <div style="height:40px;width:100px;background:red;">asldjls</div>
       </el-header>
+      <!-- tab栏ks -->
+      <el-tabs v-model="tabsActive"
+               class="firstTab"
+               type="card">
+        <!-- @tab-click="handleClick" -->
+        <el-tab-pane v-for="item in tabsList"
+                     :key="item.label"
+                     :label="item.label"
+                     :name="item.name" />
+      </el-tabs>
+      <!-- tab栏js -->
       <el-container>
         <el-main>
           <router-view></router-view>
@@ -105,7 +115,9 @@ export default {
         }
       ],
       showLeft: true,
-      bigMenu: true// 大菜单
+      bigMenu: true, // 大菜单
+      tabsActive: '',
+      tabsList: []// tabs
     }
   },
   methods: {
@@ -113,6 +125,23 @@ export default {
       const aside = this.$refs.elAside.$el
       this.bigMenu = !this.bigMenu
       aside.offsetWidth === 50 ? aside.style.width = '200px' : aside.style.width = '50px'
+    }
+  },
+  watch: {
+    $route (to, from) {
+      // 让tab可以对应
+      this.tabsActive = to.path
+      // 判断是否需要添加，不需要则返回
+      const exit = this.tabsList.some(item =>
+        to.meta.title === item.label
+      )
+      if (exit) {
+        return
+      }
+      this.tabsList.push({
+        label: to.meta.title,
+        name: to.path
+      })
     }
   }
 }
