@@ -141,13 +141,22 @@ export default {
     tabClick (data) {
       this.$router.push(data.name)
     },
-    removeTab () {
-
+    removeTab (targetName) {
+      if (targetName === this.tabsList) {
+        this.tabsList.forEach((item, index) => {
+          if (item.name === targetName) {
+            this.tabsActive = this.tabsList[index + 1] ? this.tabsList[index + 1].name : this.tabsList[index - 1].name
+            this.tabsList.splice(index, 1)
+          }
+        })
+      }
+      this.tabsList = this.tabsList.filter(item => item.name !== targetName)
     }
   },
   watch: {
     $route (to, from) {
       // 让菜单栏可以对应
+      this.menuActive = to.path
       // 让tab可以对应
       this.tabsActive = to.path
       // 判断是否需要添加，不需要则返回
