@@ -13,7 +13,7 @@
         </transition>
       </h1>
       <!-- 菜单开始 -->
-      <el-menu default-active="1"
+      <el-menu :default-active="menuActive"
                class="el-menu-vertical-demo"
                :collapse="!bigMenu"
                router
@@ -71,8 +71,10 @@
       <!-- tab栏ks -->
       <el-tabs v-model="tabsActive"
                class="firstTab"
+               @tab-click="tabClick"
+               :closable="!(tabsList.length === 1)"
+               @tab-remove="removeTab"
                type="card">
-        <!-- @tab-click="handleClick" -->
         <el-tab-pane v-for="item in tabsList"
                      :key="item.label"
                      :label="item.label"
@@ -92,6 +94,14 @@
 export default {
   mounted () {
     this.$refs.elAside.$el.style.width = ''
+    // 添加默认tab
+    this.tabsList.push({
+      label: this.$route.meta.title,
+      name: this.$route.path
+    })
+
+    this.tabsActive = this.$route.path
+    this.menuActive = this.$route.path
   },
   data () {
     return {
@@ -114,6 +124,7 @@ export default {
           ]
         }
       ],
+      menuActive: '',
       showLeft: true,
       bigMenu: true, // 大菜单
       tabsActive: '',
@@ -125,10 +136,18 @@ export default {
       const aside = this.$refs.elAside.$el
       this.bigMenu = !this.bigMenu
       aside.offsetWidth === 50 ? aside.style.width = '200px' : aside.style.width = '50px'
+    },
+    // tab点击
+    tabClick (data) {
+      this.$router.push(data.name)
+    },
+    removeTab () {
+
     }
   },
   watch: {
     $route (to, from) {
+      // 让菜单栏可以对应
       // 让tab可以对应
       this.tabsActive = to.path
       // 判断是否需要添加，不需要则返回
