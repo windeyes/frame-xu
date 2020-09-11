@@ -97,11 +97,12 @@ export default {
     // 添加默认tab
     this.tabsList.push({
       label: this.$route.meta.title,
-      name: this.$route.path
+      name: this.$route.meta.map || this.$route.path
     })
 
     this.tabsActive = this.$route.path
     this.menuActive = this.$route.path
+    console.log('tabList', this.tabsList)
   },
   data () {
     return {
@@ -156,9 +157,11 @@ export default {
   watch: {
     $route (to, from) {
       // 让菜单栏可以对应
-      this.menuActive = to.path
+      this.menuActive = to.meta.map || to.path
       // 让tab可以对应
-      this.tabsActive = to.path
+      this.tabsActive = to.meta.map || to.path
+      console.log(this.tabsActive)
+
       // 判断是否需要添加，不需要则返回
       const exit = this.tabsList.some(item =>
         to.meta.title === item.label

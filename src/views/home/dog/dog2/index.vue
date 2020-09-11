@@ -1,6 +1,9 @@
 <template>
   <div>
-    dog2
+    <keep-alive>
+      <router-view v-if="$route.meta.mustKeep"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.mustKeep"></router-view>
   </div>
 </template>
 
