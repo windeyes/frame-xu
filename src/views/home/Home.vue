@@ -100,8 +100,8 @@ export default {
       name: this.$route.meta.map || this.$route.path
     })
 
-    this.tabsActive = this.$route.path
-    this.menuActive = this.$route.path
+    this.tabsActive = this.$route.meta.map || this.$route.path
+    this.menuActive = this.$route.meta.map || this.$route.path
     console.log('tabList', this.tabsList)
   },
   data () {

@@ -9,7 +9,7 @@
               class="formShow">
       <el-table-column v-for="item in tableHeaderData"
                        :key="item.prop"
-                       :prop="item.prop"
+                       :prop="item.prop||''"
                        header-align="center"
                        show-overflow-tooltip
                        :width="item.width||''"
