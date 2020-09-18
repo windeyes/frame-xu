@@ -1,13 +1,14 @@
 <template>
   <el-container>
+    <!-- {{dat.firstTitle}} -->
     <!-- 侧边 -->
     <el-aside ref="elAside"
               width='asideWidth'>
       <h1>
-        宠物
+        {{firstTitle}}
         <transition name="netTitle">
           <img v-if="bigMenu"
-               src="../../assets/menu/leftLog.png"
+               :src="leftMenuSrc"
                alt="">
           <div v-else></div>
         </transition>
@@ -18,19 +19,27 @@
                :collapse="!bigMenu"
                router
                unique-opened>
-        <el-submenu v-for="menu in menuList"
-                    :key="menu.index"
-                    :index="menu.index">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>{{menu.name}}</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item v-for="menuItem in menu.item"
-                          :key="menuItem.index"
-                          :index="'/home/'+menuItem.index">{{menuItem.value}}</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <div v-for="menu in menuList"
+             :key="menu.index">
+          <el-menu-item class="el-submenu__title"
+                        v-if="menu.type==='oneline'"
+                        :index="'/'+menu.index">
+            <i :class="menu.icon"></i>
+            <span slot="title">{{menu.name}}</span>
+          </el-menu-item>
+          <el-submenu v-else
+                      :index="menu.index">
+            <template slot="title">
+              <i :class="menu.icon"></i>
+              <span>{{menu.name}}</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item v-for="menuItem in menu.item"
+                            :key="menuItem.index"
+                            :index="'/'+menuItem.index">{{menuItem.value}}</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </div>
       </el-menu>
       <!-- 菜单结束 -->
     </el-aside>
@@ -42,6 +51,7 @@
           <el-row type="flex"
                   align="middle"
                   class="headerLeft">
+            <!-- 展开与缩小面板时图标 -->
             <transition>
               <i v-if="bigMenu"
                  class="el-icon-d-arrow-left"
@@ -51,8 +61,8 @@
                  @click="arrowClick"></i>
             </transition>
             <div class="headerLeftText">
-              <h2>专业的宠物网站</h2>
-              <span class="littleTitle">一流的技术服务</span>
+              <h2>{{titleBig}}</h2>
+              <span class="littleTitle">{{titleSmall}}</span>
             </div>
           </el-row>
           <!-- 左侧结束 -->
@@ -60,7 +70,7 @@
           <el-row type="flex"
                   align="middle">
             <div class="headPic">
-              <img src="../../assets/menu/leftLog.png"
+              <img src="../../assets/img/menu/leftLog.png"
                    alt="">
             </div>
             <div class="username">用户的名字</div>
@@ -91,6 +101,7 @@
 </template>
 
 <script>
+import dat from '@/assets/js/frameBasic'
 export default {
   mounted () {
     this.$refs.elAside.$el.style.width = ''
@@ -106,25 +117,11 @@ export default {
   },
   data () {
     return {
-      menuList: [
-        {
-          name: '犬类',
-          index: 'dog',
-          item: [
-            {
-              index: 'dog1',
-              value: '西洋犬'
-            },
-            {
-              index: 'dog2',
-              value: '哮天犬'
-            }, {
-              index: 'dog3',
-              value: '狂犬'
-            }
-          ]
-        }
-      ],
+      menuList: dat.menuList,
+      firstTitle: dat.firstTitle,
+      leftMenuSrc: dat.leftMenuSrc,
+      titleBig: dat.titleBig,
+      titleSmall: dat.titleSmall,
       menuActive: '',
       showLeft: true,
       bigMenu: true, // 大菜单
@@ -178,4 +175,4 @@ export default {
 }
 </script>
 
-<style lang=less scoped src="./home.less"></style>
+<style lang=less scoped src="./frameBasic.less"></style>

@@ -7,41 +7,47 @@ VueRouter.prototype.push = function push (location) {
 Vue.use(VueRouter)
 const routes = [
   {
-    path: '/home',
-    name: 'home',
-    component: () => import('@/views/home/Home.vue'),
+    path: '/',
+    name: '/',
+    component: () => import('@/views/frameMain/frameBasic.vue'),
     props: true,
-    redirect: '/home/dog1',
+    redirect: '/home',
     children: [
       {
+        path: 'home',
+        component: () => import('@/views/frameMain/home'),
+        name: 'home',
+        meta: { title: '首页' }
+      },
+      {
         path: 'dog1',
-        component: () => import('@/views/home/dog/dog1'),
+        component: () => import('@/views/frameMain/dog/dog1'),
         name: 'dog1',
         meta: { title: '西洋犬' }
       },
       {
         path: 'dog2',
-        component: () => import('@/views/home/dog/dog2'),
+        component: () => import('@/views/frameMain/dog/dog2'),
         name: 'dog2',
         meta: { title: '哮天犬' },
         redirect: 'dog2/outerList',
         children: [
           {
             path: 'outerList',
-            component: () => import('@/views/home/dog/dog2/outerList'),
+            component: () => import('@/views/frameMain/dog/dog2/outerList'),
             name: 'dog2outerList',
-            meta: { title: '哮天犬', map: '/home/dog2', mustKeep: true }
+            meta: { title: '哮天犬', map: '/frameMain/dog2', mustKeep: true }
           }, {
             path: 'detail',
-            component: () => import('@/views/home/dog/dog2/detail'),
+            component: () => import('@/views/frameMain/dog/dog2/detail'),
             name: 'dog2detail',
-            meta: { title: '哮天犬', map: '/home/dog2' }
+            meta: { title: '哮天犬', map: '/frameMain/dog2' }
           }
         ]
       },
       {
         path: 'dog3',
-        component: () => import('@/views/home/dog/dog3'),
+        component: () => import('@/views/frameMain/dog/dog3'),
         name: 'dog3',
         meta: { title: '狂犬' }
       }
